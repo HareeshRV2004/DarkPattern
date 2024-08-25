@@ -1,0 +1,49 @@
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+.container {
+    margin-top: 50px;
+}
+
+h1, h2 {
+    color: #343a40; /* Dark gray headings */
+}
+
+/* Table styling */
+.table {
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #dee2e6; /* Gray border */
+    padding: 8px;
+}
+
+/* Pie chart and bar chart styling */
+.chart {
+    margin-top: 20px;
+}
+
+.chart img {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .container {
+        margin-top: 20px;
+    }
+}
+
+#google_translate_element {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}

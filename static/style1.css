@@ -1,0 +1,133 @@
+/* Basic Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: black;
+    margin: 0;
+    padding: 20px;
+    animation: fadeIn 1s ease-in;
+}
+
+h1 {
+    color: #049df6;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease-in-out;
+}
+
+/* Text Alignment */
+.Upload, .enter {
+    text-align: center;
+}
+.privacy
+{
+    text-align: center;
+    font-weight: 600;
+    font-size:45px ;
+    color: black;
+}
+
+/* Form Inputs */
+input[type="file"],
+input[type="url"],
+input[type="submit"] {
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    opacity: 1;  /* Set initial opacity to 1 */
+    animation: fadeIn 1.5s ease-in forwards;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    animation: bounceIn 1s ease-in-out;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* URL Input Margin */
+form input[type="url"] {
+    margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (min-width: 600px) {
+    form {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    input[type="submit"] {
+        width: auto;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
