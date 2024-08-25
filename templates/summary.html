@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Summary</title>
+    <link rel="stylesheet" href="static/style-summary.css">
+    <style>
+        #google_translate_element {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        #google_translate_element select {
+                background-color: transparent;
+                border: none;
+                color: #000;
+                font-size: 14px;
+                cursor: pointer;
+            }
+            #google_translate_element {
+                display: inline-block;
+            }
+            #google_translate_element img {
+                display: none;
+            }
+            .goog-te-combo {
+                color: #000;
+            }
+            .goog-logo-link {
+                display: none !important;
+            }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Uploaded/Scraped File</h1>
+    <h2>Summarization Complete</h2>
+    <p>{{ summary }}</p>
+    <h2>Full Text</h2>
+    <div style="max-height: 300px; overflow-y: scroll;">
+        <p>{{ full_text }}</p>
+    </div>
+    <h2>Ask a Question</h2>
+    <form action="/ask" method="post">
+        <input type="hidden" name="context" value="{{ context }}">
+        <input type="hidden" name="pdf_view" value="{{ pdf_view }}">
+        <input type="hidden" name="summary" value="{{ summary }}">
+        <input type="hidden" name="full_text" value="{{ full_text }}">
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="question">
+        <input type="submit" value="Ask">
+    </form>
+    {% if question %}
+    <h2 class="question">Question</h2>
+    <p class="question">{{ question }}</p>
+    <h2 class="answer">Answer</h2>
+    <p class="answer">{{ answer }}</p>
+{% endif %}
+</div>
+</script>
+    
+<div id="google_translate_element"></div>
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,es,fr,de,zh-CN,hi,ta',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+
+</html>

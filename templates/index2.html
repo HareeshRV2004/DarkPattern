@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Summarization App</title>
+    <link rel="stylesheet" href="static/style1.css">
+
+</head>
+<body>
+    <h1 class="privacy">PRIVACY POLICY SUMMARIZATION</h1>
+    <h1 class="Upload">Upload your PDF or TXT file</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".pdf, .txt">
+        <input type="submit" value="Summarize">
+    </form>
+    <h1 class="enter">Or enter a URL to scrape</h1>
+    <form action="/scrape" method="post">
+        <input type="url" name="url" required>
+        <input type="submit" value="Scrape and Summarize">
+    </form>
+</body>
+</html>

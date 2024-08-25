@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Pattern Identification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <h1>Dark Pattern Identification</h1>
+
+    <section id="working-process">
+        <h2>Working Process</h2>
+        
+        
+        <ol>
+            <li><strong>Data Collection and Preparation:</strong> We gather data from both normal websites and those known to employ dark patterns. This data is then preprocessed to remove null values and duplicate entries, ensuring quality input for our models.</li>
+            
+            <li><strong>Model Training:</strong> Two machine learning models are trained separately for presence detection and pattern categorization. The presence detection model employs a pipeline consisting of TF-IDF vectorization and a Bernoulli Naive Bayes classifier, while the pattern categorization model utilizes TF-IDF vectorization and a Multinomial Naive Bayes classifier.</li>
+            
+            <li><strong>Scraping and Analysis:</strong> When a user submits a website URL, our system scrapes the website to extract its text content. The text content is then processed using the trained models for dark pattern detection. If a line is predicted to contain a dark pattern, the model for pattern categorization further predicts the category of the dark pattern.</li>
+        </ol>
+    </section>
+
+    <form action="/result" method="post">
+        <label for="url">Enter the URL of the website:</label><br>
+        <input type="text" id="url" name="url"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

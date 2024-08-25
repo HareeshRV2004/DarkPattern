@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Analysis Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        h1, h2 {
+            color: #007BFF;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            margin: auto;
+        }
+        canvas {
+            border-radius: 8px;
+        }
+        .recommendation {
+            margin-top: 2rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-size: 1.2rem;
+        }
+        #google_translate_element {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+        #google_translate_element select {
+            background-color: transparent;
+            border: none;
+            color: #000;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        #google_translate_element {
+            display: inline-block;
+        }
+        #google_translate_element img {
+            display: none;
+        }
+        .goog-te-combo {
+            color: #000;
+        }
+        .goog-logo-link {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Review Analysis Results</h1>
+        <p><strong>Positive Percentage:</strong> {{ result.positive_percentage }}%</p>
+        <p><strong>Summary of Positive Reviews:</strong></p>
+        <p>{{ result.positive_summary }}</p>
+        
+        <p><strong>Negative Percentage:</strong> {{ result.negative_percentage }}%</p>
+        <p><strong>Summary of Negative Reviews:</strong></p>
+        <p>{{ result.negative_summary }}</p>
+        
+        <h2>Recommendation</h2>
+        <div class="recommendation">
+            <p>{{ result.recommendation }}</p>
+        </div>
+        
+        <h2>Sentiment Distribution</h2>
+        <div class="chart-container">
+            <canvas id="sentimentDoughnutChart"></canvas>
+        </div>
+        
+        <h2>Search for Summary</h2>
+        <form id="searchForm" action="{{ url_for('summarize_query') }}" method="POST">
+            <input type="text" name="query" placeholder="Enter your query" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="summaryContainer">
+            {% if summary %}
+            <h2>Summary for "{{ query }}"</h2>
+            <p>{{ summary }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('sentimentDoughnutChart').getContext('2d');
+        var sentimentDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Positive', 'Negative'],
+                datasets: [{
+                    label: 'Sentiment Distribution',
+                    data: [{{ result.positive_percentage }}, {{ result.negative_percentage }}],
+                    backgroundColor: ['#4CAF50', '#F44336'], // Green for positive, red for negative
+                    borderColor: ['#fff', '#fff'], // White border color for better contrast
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Allows the chart to fit the container
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#333' // Legend text color
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2) + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var formData = new FormData(this);
+
+            fetch('{{ url_for("summarize_query") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the page with the new summary
+                document.getElementById('summaryContainer').innerHTML = `
+                    <h2>Summary for "${data.query}"</h2>
+                    <p>${data.summary}</p>
+                `;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+    
+    <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,zh-CN,hi,ta',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

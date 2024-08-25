@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Pattern Catcher</title>
+    <link rel="stylesheet" href="static/home.css">
+    
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Welcome to Dark Pattern Catcher</h1>
+            <p>Dark Pattern Catcher is a tool powered by machine learning to detect and analyze dark patterns on websites. It provides valuable insights and visualizations to help users identify deceptive practices.</p>
+           <B> <p class="features">With Dark Pattern Catcher, you can:</p>
+            <ul class="features-list">
+                <li>Detect deceptive design elements on websites.</li>
+                <li>Explore detailed analysis and visualizations of detected dark patterns.</li>
+                <li>Learn about various types of dark patterns and how to avoid them.</li>
+            </ul></B>
+
+            <!-- Buttons -->
+            <div class="options">
+                <div class="option">
+                    <a href="{{ url_for('about') }}">Know About Dark Patterns</a>
+                </div>
+                <div class="option">
+                    <a href="{{ url_for('find') }}">Detect Dark Patterns in a Website</a>
+                </div>
+                <div class="option">
+                    <a href="{{ url_for('detect') }}">Ways to Prevent Dark Patterns</a>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <h2 class="dark-patterns-title">What are Dark Patterns?</h2>
+            <p>Dark patterns are user interface design choices that manipulate or deceive users into taking certain actions that they might not otherwise choose to take. They are often employed in digital interfaces, such as websites and apps, to push users towards actions that benefit the company or organization behind the interface, rather than serving the user's best interests.</p>
+            
+            <h2>Types of Dark Patterns</h2>
+            <ul>
+                <li><strong>Trick Questions:</strong> These are questions designed to confuse users or lead them to make choices that they didn't intend. For example, a website might use double negatives or confusing language to trick users into opting into services they don't want.</li>
+                <li><strong>Hidden Costs:</strong> This involves hiding additional fees or charges until the user is further into the checkout process. Users may not realize they are being charged extra until it's too late to easily back out.</li>
+                <!-- Add other types of dark patterns here -->
+            </ul>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Dark Pattern Catcher. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

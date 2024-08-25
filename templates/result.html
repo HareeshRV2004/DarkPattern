@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Pattern Identification Results</title>
+    <!-- Add Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Light gray background */
+            color: #343a40; /* Dark text color */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff; /* White container background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        /* DataTables styling */
+        #textTable_wrapper {
+            margin-top: 20px;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dark Pattern Identification Results</h1>
+        
+        <!-- Display pie chart -->
+        <div class="chart">
+            <h2>Percentage of Dark Patterns</h2>
+            <canvas id="pieChart"></canvas>
+        </div>
+
+        <!-- Display radar chart -->
+        <div class="chart">
+            <h2>Dark Patterns Radar Graph</h2>
+            <canvas id="radarChart"></canvas>
+        </div>
+
+        <!-- Display table details using DataTables -->
+        <div class="table-responsive">
+            <h2>Text Content:</h2>
+            <table id="textTable" class="display">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Text Content</th>
+                        <th>Final Predictions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, row in text_df.iterrows() %}
+                    <tr>
+                        <td>{{ row['Index'] }}</td>
+                        <td>{{ row['Text Content'][:100] }}...</td> <!-- Display first 100 characters -->
+                        <td>
+                            {% if row['Final Predictions'] == 'scarcity' %}
+                                Scarcity
+                            {% elif row['Final Predictions'] == 'misdirection' %}
+                                Misdirection
+                            {% elif row['Final Predictions'] == 'false urgency' %}
+                                False Urgency
+                            {% elif row['Final Predictions'] == 'obstruction' %}
+                                Obstruction
+                            {% elif row['Final Predictions'] == 'social proof' %}
+                                Social Proof
+                            {% else %}
+                                {{ row['Final Predictions'] }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+
+    <!-- DataTables and Radar chart scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            $('#textTable').DataTable();
+
+            // Initialize Radar chart
+            var radarCtx = document.getElementById('radarChart').getContext('2d');
+            var radarChart = new Chart(radarCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Scarcity', 'Misdirection', 'False Urgency', 'Obstruction', 'Social Proof'],
+                    datasets: [{
+                        label: 'Dark Patterns Radar Graph',
+                        data: [5, 4, 3, 2, 1], // Replace with actual data
+                        backgroundColor: 'rgba(255, 255, 0, 0.2)',
+                        borderColor: 'rgba(128, 0, 128, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Initialize Pie chart
+            var pieCtx = document.getElementById('pieChart').getContext('2d');
+            var pieChart = new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Scarcity', 'Misdirection', 'False Urgency', 'Obstruction', 'Social Proof'],
+                    datasets: [{
+                        label: 'Percentage of Dark Patterns',
+                        data: [20, 30, 15, 10, 25], // Replace with actual data
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
